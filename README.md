@@ -12,4 +12,13 @@ Before diving in, these are the system specs I tried to meet to run Splunk and S
 - Ubuntu Workstation (Ubuntu 20.04 Desktop): 2 vCPU, 4 GB RAM, 20 GB disk. Used as a Linux endpoint with Universal Forwarder, hosting an Apache web server (to generate access logs) and possibly UFW/iptables for firewall logging.
 - Kali Linux Attacker: 2 vCPU, 2 GB RAM, 20 GB disk. Used to simulate attacks (port scans, brute-force attempts, web attacks) against the other machines. This machine typically does not run a forwarder since it’s an adversary simulator, but it shares the host-only network to interact with the targets.
 
-- #
+# Network Layout
+All VMs reside on a private virtual network (VMware host-only or NAT network) so they can communicate. The Splunk Enterprise server listens on port 9997 for incoming forwarded logs and on port 8000 for the Splunk Web interface. Splunk SOAR listens on its web port (default HTTPS port 9999). Ensure the VMs are on the same subnet and that any host firewalls allow the necessary ports (e.g., TCP 8000, 8089, 9997 on Splunk Enterprise; TCP 9999 on SOAR).
+
+# Lab Architecture Summary
+- Splunk Enterprise (SIEM) on Ubuntu Server – receives and indexes logs from all endpoints.
+- Splunk SOAR on a separate server – ingests alerts from Splunk and executes automated response playbooks.
+- Endpoints (Win10, Ubuntu workstation) – running Universal Forwarders to send logs (Windows Event Logs/Sysmon, Linux system logs, Apache logs, firewall logs) to Splunk.
+- Attacker (Kali) – generates malicious activity (scans, attacks) that will be reflected in the endpoints’ logs and detected by Splunk.
+
+Logs collected in this homelab include Windows Sysmon events, OS security events (for login attempts), firewall logs (Windows Firewall or UFW), and Apache web server access logs. These diverse data sources will showcase end-to-end detection and response: from data ingestion in Splunk to automated actions in SOAR.
