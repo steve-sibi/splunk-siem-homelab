@@ -1,4 +1,5 @@
-# splunk-siem-homelab
+# Splunk SIEM Homelab - A full overview
+NOTE: I'm working on a cloud implementation (because my laptop has been through enough torture) and will make a new read-me when that's complete for anyone interested.
 
 # Overview
 This was a personal project of mine I wanted to take on to build experience in architecting and using Splunk in a simulated environment. This guide walks through setting up a SIEM+SOAR homelab using Splunk Enterprise 9.4.1 and Splunk SOAR 6.4.0 on a local VMware environment.  I will cover the lab requirements, installation steps, log forwarding configuration, data ingestion, building dashboards, writing correlation searches (SPL queries), and designing simple SOAR playbooks. Screenshots will be added later for clarity.
@@ -22,3 +23,16 @@ All VMs reside on a private virtual network (VMware host-only or NAT network) so
 - Attacker (Kali) – generates malicious activity (scans, attacks) that will be reflected in the endpoints’ logs and detected by Splunk.
 
 Logs collected in this homelab include Windows Sysmon events, OS security events (for login attempts), firewall logs (Windows Firewall or UFW), and Apache web server access logs. These diverse data sources will showcase end-to-end detection and response: from data ingestion in Splunk to automated actions in SOAR.
+
+# Installing Splunk Enterprise 9.4.1 on Ubuntu
+
+1. Download Splunk: Sign in to Splunk’s download portal and get the Linux installer for Splunk Enterprise 9.4.1 (e.g., a .deb package for Ubuntu or a tar.gz). For example, you might download a file named splunk-9.4.1-<build>-Linux-x86_64.deb. (Note: You can use the free license for a lab, which allows indexing up to 500 MB of data per day. I was able to get the developer license in this case, so I can ingest up to 10GB of data daily)
+   
+2. Install the package: Transfer the installer to your Ubuntu server VM (via wget or via the host). Then run the installation. For a Debian-based system:
+# Run as root or with sudo:
+sudo dpkg -i splunk-9.4.1-*.deb
+# If using a tar.gz, extract to /opt and then run the splunk binary from /opt/splunk
+This will install Splunk into /opt/splunk. After installation, create an admin user and accept the license.
+
+
+
