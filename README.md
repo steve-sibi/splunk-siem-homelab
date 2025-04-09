@@ -29,10 +29,26 @@ Logs collected in this homelab include Windows Sysmon events, OS security events
 1. Download Splunk: Sign in to Splunk’s download portal and get the Linux installer for Splunk Enterprise 9.4.1 (e.g., a .deb package for Ubuntu or a tar.gz). For example, you might download a file named splunk-9.4.1-<build>-Linux-x86_64.deb. (Note: You can use the free license for a lab, which allows indexing up to 500 MB of data per day. I was able to get the developer license in this case, so I can ingest up to 10GB of data daily)
    
 2. Install the package: Transfer the installer to your Ubuntu server VM (via wget or via the host). Then run the installation. For a Debian-based system:
+
+```
 # Run as root or with sudo:
 sudo dpkg -i splunk-9.4.1-*.deb
 # If using a tar.gz, extract to /opt and then run the splunk binary from /opt/splunk
+```
 This will install Splunk into /opt/splunk. After installation, create an admin user and accept the license.
+
+3. Start Splunk for the first time:
+
+```
+sudo /opt/splunk/bin/splunk start --accept-license
+# You will be prompted to create an admin username & password
+```
+
+Splunk should now be running. Enable it to start on boot (optional but useful in a homelab such as mine):
+
+```
+sudo /opt/splunk/bin/splunk enable boot-start
+```
 
 
 
