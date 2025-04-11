@@ -50,5 +50,19 @@ Splunk should now be running. Enable it to start on boot (optional but useful in
 sudo /opt/splunk/bin/splunk enable boot-start
 ```
 
+4. Configure Splunk to receive data from forwarders: In Splunk Web (navigate to `http://<splunk-server-ip>:8000` and log in as admin), go to Settings > Forwarding and Receiving > Configure Receiving. Add a new port `9997` (the default port that forwarders send data to). This opens port 9997 on the Splunk server to listen for incoming Universal Forwarder data. Ensure the Ubuntu firewall (ufw) allows this port if enabled.
+
+5. Create indexes (optional but recommended): For organization, create separate indexes for different log types. In Splunk Web, go to Settings > Indexes and add indexes such as:
+   
+- `windows` (for general Windows Event logs),
+- `sysmon` (for Sysmon events specifically),
+- `linux` (for Linux system logs),
+- `web` (for Apache/web server logs),
+- `firewall` (for firewall logs).
+
+If you prefer, you can use the default main index for everything, but separate indexes help manage and search data more efficiently. 6. Verify Splunk is ready: You should be able to access the Splunk GUI on port 8000 and Splunk should be waiting for data on port 9997. At this point, Splunk Enterprise is set up as our central SIEM platform
+
+6. Verify Splunk is ready: You should be able to access the Splunk GUI on port 8000 and Splunk should be waiting for data on port 9997. At this point, Splunk Enterprise is set up as our central SIEM platform.
+
 
 
