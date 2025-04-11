@@ -60,9 +60,39 @@ sudo /opt/splunk/bin/splunk enable boot-start
 - `web` (for Apache/web server logs),
 - `firewall` (for firewall logs).
 
-If you prefer, you can use the default main index for everything, but separate indexes help manage and search data more efficiently. 6. Verify Splunk is ready: You should be able to access the Splunk GUI on port 8000 and Splunk should be waiting for data on port 9997. At this point, Splunk Enterprise is set up as our central SIEM platform
+If you prefer, you can use the default `main` index for everything, but separate indexes help manage and search data more efficiently. 
 
 6. Verify Splunk is ready: You should be able to access the Splunk GUI on port 8000 and Splunk should be waiting for data on port 9997. At this point, Splunk Enterprise is set up as our central SIEM platform.
+
+# Installing Splunk SOAR 6.4.0 on a VM
+
+Splunk SOAR (formerly known as Phantom) will handle orchestration and automation. We install it on a separate Linux VM. 
+
+1. Obtain Splunk SOAR: Download the Splunk SOAR 6.4.0 on-premises installer from Splunk (requires a Splunk account). Splunk SOAR is available as an RPM/tar package for Red Hat-based systems, and can also be installed on Ubuntu 20.04 with a tar installer. Alternatively, Splunk may provide a pre-built OVA for easy deployment.
+
+2. Prepare the OS: Use a supported OS (RHEL/CentOS 8 or Ubuntu 20.04 LTS). Ensure the VM has at least a few GB of RAM (8 GB or more). Update the OS packages and set a hostname. If using Ubuntu, you may need to install dependencies like `docker` (Splunk SOAR uses Docker containers under the hood).
+
+3. Install Splunk SOAR - Follow the official install steps:
+- For RHEL/CentOS: create a `phantom` user, untar the Splunk SOAR installer to `/opt/phantom`, then run the installer script (`./soar-install`). For Ubuntu, a similar process is followed with an installer script.
+- During installation, default ports will be set up (Splunk SOAR uses ports 9999 for HTTPS web UI by default, and others for services – make sure to allow them).
+- The installer will prompt for some settings (you can accept defaults for a lab). Wait for the installation to complete (it can take 10-15 minutes as it sets up containers).
+
+4. Initial Configuration - Once installed, start the Splunk SOAR service:
+
+```
+sudo /opt/phantom/bin/phantom start
+```
+Open a browser to `https://<soar-server-ip>:9999`. You should see the Splunk SOAR login page. Log in with the default credentials or the ones you set during installation (the default might be `admin` / `password` if not prompted to change).
+
+5. Set admin account and networking - In the SOAR UI, create your admin user (if not already done) and adjust any settings (for example, SMTP for email if you plan to send email alerts, or integrating Slack API if you plan Slack alerts, etc.). In Administration, you can generate an Auth Token for API access (needed when Splunk Enterprise sends events to SOAR).
+
+6. Integrate Splunk Enterprise with SOAR - To enable end-to-end alerting, configure Splunk and SOAR to talk:
+- Install the Splunk App for SOAR Export on the Splunk Enterprise server (available on Splunkbase). This app allows Splunk to send notable events or search results to Splunk SOAR.
+- In Splunk SOAR, add a new Asset for Splunk (under Administration > Integrations). This involves providing the Splunk server’s address, port (8089 for Splunk’s API), and credentials or token. Set the asset to ingest events (so that SOAR will fetch or receive alerts from Splunk)​.
+- (Alternatively, you can configure Splunk SOAR to poll Splunk for alerts or use the app’s alert action to push events to SOAR. In our lab, we assume the app and asset method for simplicity.)
+
+After this integration, any alerts triggered in Splunk (via saved searches or correlation searches) can be sent to Splunk SOAR for automated response. We will create example alerts and playbooks in later sections.
+
 
 
 
