@@ -91,7 +91,9 @@ Open a browser to `https://<soar-server-ip>:9999`. You should see the Splunk SOA
 - In Splunk SOAR, add a new Asset for Splunk (under Administration > Integrations). This involves providing the Splunk server’s address, port (8089 for Splunk’s API), and credentials or token. Set the asset to ingest events (so that SOAR will fetch or receive alerts from Splunk)​.
 - (Alternatively, you can configure Splunk SOAR to poll Splunk for alerts or use the app’s alert action to push events to SOAR. In our lab, we assume the app and asset method for simplicity.)
 
-After this integration, any alerts triggered in Splunk (via saved searches or correlation searches) can be sent to Splunk SOAR for automated response. We will create example alerts and playbooks in later sections.
+After this integration, any alerts triggered in Splunk (via saved searches or correlation searches) can be sent to Splunk SOAR for automated response. I will create example alerts and playbooks in later sections that I learnt from my research.
+
+# Installing Universal Forwarders on Endpoints
 
 
 
