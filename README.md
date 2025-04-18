@@ -94,6 +94,9 @@ Open a browser to `https://<soar-server-ip>:9999`. You should see the Splunk SOA
 After this integration, any alerts triggered in Splunk (via saved searches or correlation searches) can be sent to Splunk SOAR for automated response. I will create example alerts and playbooks in later sections that I learnt from my research.
 
 # Installing Universal Forwarders on Endpoints
+This will go over how to install and configure Splunk Universal Forwarder (UF) on each endpoint (Windows and Linux machines in this case) so that they send logs to the Splunk Enterprise indexer.
+
+
 
 
 
