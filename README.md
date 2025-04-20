@@ -96,6 +96,18 @@ After this integration, any alerts triggered in Splunk (via saved searches or co
 # Installing Universal Forwarders on Endpoints
 This will go over how to install and configure Splunk Universal Forwarder (UF) on each endpoint (Windows and Linux machines in this case) so that they send logs to the Splunk Enterprise indexer.
 
+-- Windows 10 - Universal Forwarder + Sysmon Setup
+
+-- Ubuntu Workstation - Universal Forwarder Setup
+
+# Log Ingestion and Index Configuration
+
+# Building Security Dashboards in Splunk
+
+# Example Correlation Searches (SPL) for Threat Detection
+
+# Automated Incident Response with Splunk SOAR Playbooks
+
 
 
 
