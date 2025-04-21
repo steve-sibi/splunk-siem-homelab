@@ -108,6 +108,7 @@ This will go over how to install and configure Splunk Universal Forwarder (UF) o
 
 # Automated Incident Response with Splunk SOAR Playbooks
 
+# Conclusion
 
 
 
